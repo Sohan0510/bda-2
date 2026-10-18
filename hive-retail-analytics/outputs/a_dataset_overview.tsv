@@ -1,0 +1,2 @@
+﻿section	total_records	distinct_invoices	distinct_products	distinct_countries	identified_customers	earliest_transaction_date	latest_transaction_date	total_quantity_recorded	cancellation_lines	cancellation_invoices	return_lines
+dataset_overview	541909	25900	4070	38	4372	2010-12-01 08:26:00.0	2011-12-09 12:50:00.0	5176450	9288	3836	10624

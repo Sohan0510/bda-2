@@ -1,0 +1,4 @@
+﻿line_type	lines	total_quantity	total_value_gbp	distinct_invoices
+positive_sale	531285	5660981	10644560.42	20728
+cancellation	9288	-277574	-896812.49	3836
+return_negative_quantity	1336	-206957	0.00	1336

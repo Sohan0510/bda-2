@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<configuration>
+  <!-- Standalone HiveServer2 with embedded Derby metastore on the local filesystem (no HDFS required). -->
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:derby:;databaseName=/tmp/hive/metastore_db;create=true</value>
+    <description>Derby connection URL for the embedded Hive metastore.</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>org.apache.derby.jdbc.EmbeddedDriver</value>
+  </property>
+  <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>/user/hive/warehouse</value>
+    <description>Default location for managed tables (local filesystem).</description>
+  </property>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>file:///</value>
+    <description>Use the local filesystem instead of HDFS.</description>
+  </property>
+  <property>
+    <name>hive.server2.thrift.bind.host</name>
+    <value>0.0.0.0</value>
+  </property>
+  <property>
+    <name>hive.server2.thrift.port</name>
+    <value>10000</value>
+  </property>
+  <property>
+    <name>hive.server2.enable.doAs</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>hive.exec.dynamic.partition.mode</name>
+    <value>nonstrict</value>
+  </property>
+</configuration>

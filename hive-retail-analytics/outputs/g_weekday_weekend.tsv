@@ -1,0 +1,3 @@
+﻿day_type	transaction_lines	distinct_invoices	quantity_sold	signed_revenue_gbp	positive_sales_revenue_gbp
+weekday	477534	23519	4708718	8942069.04	9830732.81
+weekend	64375	2381	467732	805678.89	813827.61

@@ -1,0 +1,304 @@
+{
+  "validated_at": "2026-10-19T04:45:14.018251",
+  "processed_csv": "F:\\bda-2\\hive-retail-analytics\\data\\processed\\online_retail_clean.csv",
+  "raw_records": 541909,
+  "overall_pass": true,
+  "checks": [
+    {
+      "check": "total_records",
+      "hive_value": 541909,
+      "pandas_value": 541909,
+      "match": true
+    },
+    {
+      "check": "total_quantity_recorded",
+      "hive_value": 5176450,
+      "pandas_value": 5176450,
+      "match": true
+    },
+    {
+      "check": "monthly_positive_revenue_all_months",
+      "hive_value": [
+        823746.14,
+        691364.56,
+        523631.89,
+        717639.36,
+        537808.62,
+        770536.02,
+        761739.9,
+        719221.19,
+        737014.26,
+        1058590.17,
+        1154979.3,
+        1509496.33,
+        638792.68
+      ],
+      "pandas_value": [
+        823746.14,
+        691364.56,
+        523631.89,
+        717639.36,
+        537808.62,
+        770536.02,
+        761739.9,
+        719221.19,
+        737014.26,
+        1058590.17,
+        1154979.3,
+        1509496.33,
+        638792.68
+      ],
+      "match": true
+    },
+    {
+      "check": "monthly_signed_revenue_all_months",
+      "hive_value": [
+        748957.02,
+        560000.26,
+        498062.65,
+        683267.08,
+        493207.12,
+        723333.51,
+        691123.12,
+        681300.11,
+        682680.51,
+        1019687.62,
+        1070704.67,
+        1461756.25,
+        433668.01
+      ],
+      "pandas_value": [
+        748957.02,
+        560000.26,
+        498062.65,
+        683267.08,
+        493207.12,
+        723333.51,
+        691123.12,
+        681300.11,
+        682680.51,
+        1019687.62,
+        1070704.67,
+        1461756.25,
+        433668.01
+      ],
+      "match": true
+    },
+    {
+      "check": "product_vs_monthly_positive_revenue_total",
+      "hive_value": 10644560.42,
+      "pandas_value": 10644560.42,
+      "match": true
+    },
+    {
+      "check": "top20_products_by_quantity_ranking",
+      "hive_value": [
+        "22197",
+        "84077",
+        "85099B",
+        "85123A",
+        "84879",
+        "21212",
+        "23084",
+        "22492",
+        "22616",
+        "21977",
+        "22178",
+        "17003",
+        "15036",
+        "21915",
+        "22386",
+        "23203",
+        "20725",
+        "84946",
+        "22086",
+        "84991"
+      ],
+      "pandas_value": [
+        "22197",
+        "84077",
+        "85099B",
+        "85123A",
+        "84879",
+        "21212",
+        "23084",
+        "22492",
+        "22616",
+        "21977",
+        "22178",
+        "17003",
+        "15036",
+        "21915",
+        "22386",
+        "23203",
+        "20725",
+        "84946",
+        "22086",
+        "84991"
+      ],
+      "match": true
+    },
+    {
+      "check": "country_revenue_all_countries",
+      "hive_value": [
+        8187806.36,
+        284661.54,
+        263276.82,
+        221698.21,
+        197403.9,
+        137077.27,
+        56385.35,
+        54774.58,
+        40910.96,
+        36595.91,
+        35340.62,
+        35163.46,
+        29367.02,
+        22326.74,
+        20086.29,
+        18768.14,
+        16890.51,
+        12946.29,
+        10154.32,
+        10117.04,
+        9120.39,
+        7907.82,
+        7213.14,
+        4749.79,
+        4710.52,
+        4310.0,
+        3666.38,
+        2505.47,
+        1902.28,
+        1730.92,
+        1693.88,
+        1661.06,
+        1291.75,
+        1143.6,
+        1002.31,
+        707.72,
+        548.4,
+        131.17
+      ],
+      "pandas_value": [
+        8187806.36,
+        284661.54,
+        263276.82,
+        221698.21,
+        197403.9,
+        137077.27,
+        56385.35,
+        54774.58,
+        40910.96,
+        36595.91,
+        35340.62,
+        35163.46,
+        29367.02,
+        22326.74,
+        20086.29,
+        18768.14,
+        16890.51,
+        12946.29,
+        10154.32,
+        10117.04,
+        9120.39,
+        7907.82,
+        7213.14,
+        4749.79,
+        4710.52,
+        4310.0,
+        3666.38,
+        2505.47,
+        1902.28,
+        1730.92,
+        1693.88,
+        1661.06,
+        1291.75,
+        1143.6,
+        1002.31,
+        707.72,
+        548.4,
+        131.17
+      ],
+      "match": true
+    },
+    {
+      "check": "country_total_equals_overall_signed_revenue",
+      "hive_value": 9747747.93,
+      "pandas_value": 9747747.93,
+      "match": true
+    },
+    {
+      "check": "top_product_by_quantity",
+      "hive_value": "22197",
+      "pandas_value": "22197",
+      "match": true
+    },
+    {
+      "check": "cancellation_lines",
+      "hive_value": 9288,
+      "pandas_value": 9288,
+      "match": true
+    },
+    {
+      "check": "cancellation_invoices_distinct",
+      "hive_value": 3836,
+      "pandas_value": 3836,
+      "match": true
+    },
+    {
+      "check": "return_lines",
+      "hive_value": 10624,
+      "pandas_value": 10624,
+      "match": true
+    },
+    {
+      "check": "identified_customers_distinct",
+      "hive_value": 4372,
+      "pandas_value": 4372,
+      "match": true
+    },
+    {
+      "check": "missing_customerid_rows_retained",
+      "hive_value": 541909,
+      "pandas_value": 541909,
+      "match": true
+    },
+    {
+      "check": "row_count_c_product_quantity_all",
+      "hive_value": 4070,
+      "pandas_value": 4070,
+      "match": true
+    },
+    {
+      "check": "row_count_e_country_summary",
+      "hive_value": 38,
+      "pandas_value": 38,
+      "match": true
+    },
+    {
+      "check": "row_count_e_country_monthly",
+      "hive_value": 314,
+      "pandas_value": 314,
+      "match": true
+    },
+    {
+      "check": "row_count_f_cancellation_by_country",
+      "hive_value": 38,
+      "pandas_value": 38,
+      "match": true
+    },
+    {
+      "check": "row_count_g_daily_trend",
+      "hive_value": 305,
+      "pandas_value": 305,
+      "match": true
+    },
+    {
+      "check": "row_count_g_hourly_pattern",
+      "hive_value": 15,
+      "pandas_value": 15,
+      "match": true
+    }
+  ]
+}

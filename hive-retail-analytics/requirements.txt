@@ -1,0 +1,15 @@
+# Python dependencies for the Hive Retail Analytics project.
+#
+# Install with:  pip install -r requirements.txt
+#
+# Used by:
+#   src/acquire_and_prepare.py   (dataset acquisition, xlsx -> csv, metrics)
+#   tests/validate.py            (independent validation of Hive results)
+#   dashboard/app.py             (Streamlit dashboard consuming Hive outputs)
+
+pandas>=2.2
+openpyxl>=3.1
+pyarrow>=14
+streamlit>=1.28
+plotly>=5.15
+numpy>=1.24

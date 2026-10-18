@@ -1,0 +1,5 @@
+﻿transaction_count_band	identified_customers	total_invoices
+1 transaction	1313	1313
+2-5 transactions	1972	6052
+6-20 transactions	945	9212
+20+ transactions	142	5613

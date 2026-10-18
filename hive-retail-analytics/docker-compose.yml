@@ -1,0 +1,42 @@
+# Docker Compose for Apache Hive (official apache/hive:4.0.0 image).
+#
+# Single-container setup with HiveServer2 + embedded Derby metastore
+# (per https://hive.apache.org/docs/latest/admin/setting-up-hive-with-docker/).
+# Data/metastore persist in named volumes so restarting the environment keeps
+# databases, tables and loaded data.
+#
+# Windows PowerShell usage:
+#   docker compose up -d
+#   docker compose logs -f hive-server
+#   docker compose down
+#
+# Ports:
+#   10000 - HiveServer2 (Beeline / JDBC)
+#   10002 - HiveServer2 web UI (if enabled)
+
+version: "3.8"
+
+services:
+  hive-server:
+    image: apache/hive:4.0.0
+    container_name: hive-server
+    user: root
+    environment:
+      - SERVICE_NAME=hiveserver2
+    ports:
+      - "10000:10000"
+      - "10002:10002"
+    volumes:
+      - hive_warehouse:/opt/hive/data/warehouse
+      - hive_metastore:/tmp/hive
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "beeline -u jdbc:hive2://localhost:10000 --silent=true --showHeader=false -e 'SHOW DATABASES;' > /dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 12
+      start_period: 60s
+
+volumes:
+  hive_warehouse:
+  hive_metastore:
