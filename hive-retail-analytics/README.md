@@ -1,7 +1,6 @@
-# Hive Retail Analytics
+# Large-Scale Customer Transaction and Purchase Pattern Analysis Using Apache Hive
 
-Large-Scale Customer Transaction and Purchase Pattern Analysis using Apache Hive
-(BCS714D – Big Data Analytics, Mini-Project)
+(Big Data Analytics Mini-Project using Apache Hive & Genuine UCI Retail Dataset)
 
 ## What this is
 
@@ -31,13 +30,19 @@ hive-retail-analytics/
 │                               # embedded Derby metastore, named volumes)
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # this file
+├── backend/                    # FastAPI async REST API backend
+│   └── main.py                 # REST endpoints, Hive data loaders, OpenAPI
 ├── config/
 │   └── category_rules.csv      # Derived (documented) product-category rules
+├── dashboard/
+│   └── app.py                  # Streamlit dashboard consuming Hive outputs
 ├── data/
 │   ├── raw/                    # Original downloaded workbook (preserved)
 │   └── processed/              # Prepared CSV for Hive (generated)
-├── dashboard/
-│   └── app.py                  # Streamlit dashboard consuming Hive outputs
+├── frontend/                   # Modern responsive Single Page Web Application
+│   ├── index.html              # Semantic HTML5 app with tabbed navigation
+│   ├── css/style.css           # Luxury obsidian dark glassmorphism stylesheet
+│   └── js/app.js               # Client controller, Chart.js graphs, catalog search
 ├── hive/                       # HiveQL scripts (run in numbered order)
 │   ├── 01_create_database.hql
 │   ├── 02_create_tables.hql
@@ -162,15 +167,21 @@ handling, output row counts). Writes `outputs/validation/validation_results.json
 
 All checks pass against the genuine dataset.
 
-### 6. Launch the dashboard
+### 6. Launch the Full-Stack Modern Web Application & REST API (Recommended)
+
+Run the FastAPI backend (serves both the REST API and the modern responsive frontend):
 
 ```powershell
-python -m streamlit run dashboard\app.py
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8080 --reload
 ```
 
-Then open http://localhost:8501. The dashboard reads the Hive-generated TSVs in
-`outputs/` (no hardcoded numbers). Use the sidebar to filter by country, product
-and date range.
+* **Web Application:** http://localhost:8080 (Luxury Obsidian Dark Glassmorphic dashboard with Chart.js canvas visualizations, live product search, catalog pagination, interactive country trends, data quality audit, and HiveQL studio).
+* **Interactive API Documentation (Swagger):** http://localhost:8080/docs
+* **Alternative Streamlit Dashboard:**
+  ```powershell
+  python -m streamlit run dashboard\app.py
+  ```
+  Accessible at http://localhost:8501.
 
 ## Analytics implemented (HiveQL)
 

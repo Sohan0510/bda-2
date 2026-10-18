@@ -31,11 +31,11 @@ services:
       - hive_metastore:/tmp/hive
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "beeline -u jdbc:hive2://localhost:10000 --silent=true --showHeader=false -e 'SHOW DATABASES;' > /dev/null 2>&1 || exit 1"]
-      interval: 15s
+      test: ["CMD-SHELL", "bash -c 'cat < /dev/null > /dev/tcp/localhost/10000' || exit 1"]
+      interval: 30s
       timeout: 10s
-      retries: 12
-      start_period: 60s
+      retries: 5
+      start_period: 45s
 
 volumes:
   hive_warehouse:

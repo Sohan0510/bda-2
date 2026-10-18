@@ -158,6 +158,19 @@ def main() -> int:
     check("top20_products_by_quantity_ranking", hive_top_stock, pd_top_stock,
           hive_top_stock == pd_top_stock)
 
+    # per-product revenue ranking check
+    top_r_hive = read_tsv("c_product_top20_revenue")
+    top_r_pd = (
+        df.groupby("StockCode")["line_amount"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(20)
+    )
+    hive_top_r_stock = top_r_hive["stockcode"].tolist()
+    pd_top_r_stock = top_r_pd.index.tolist()
+    check("top20_products_by_revenue_ranking", hive_top_r_stock, pd_top_r_stock,
+          hive_top_r_stock == pd_top_r_stock)
+
     # ------------------------------------------------------------------
     # 5. Country-level totals (signed, all lines)
     # ------------------------------------------------------------------
@@ -205,6 +218,33 @@ def main() -> int:
     check("return_lines", int(overview["return_lines"].iloc[0]),
           int(df["is_return"].sum()),
           int(overview["return_lines"].iloc[0]) == int(df["is_return"].sum()))
+
+    # Cancellation breakdown by country
+    cbc_hive = read_tsv("f_cancellation_by_country").set_index("country")
+    pd_canc_inv = df[df["is_cancellation"]].groupby("Country")["InvoiceNo"].nunique()
+    pd_canc_lines = df[df["is_cancellation"]].groupby("Country").size()
+    cbc_inv_ok = all(
+        int(to_num(cbc_hive.loc[cnt, "cancellation_invoices"])) == int(pd_canc_inv.get(cnt, 0))
+        for cnt in cbc_hive.index
+    )
+    cbc_lines_ok = all(
+        int(to_num(cbc_hive.loc[cnt, "cancellation_lines"])) == int(pd_canc_lines.get(cnt, 0))
+        for cnt in cbc_hive.index
+    )
+    check("cancellation_invoices_by_country_all_match", True, cbc_inv_ok, cbc_inv_ok)
+    check("cancellation_lines_by_country_all_match", True, cbc_lines_ok, cbc_lines_ok)
+
+    # Quantity direction classification
+    qd_hive = read_tsv("f_quantity_direction").set_index("line_type")
+    pos_lines_pd = int(((df["Quantity"] > 0) & (~df["is_cancellation"])).sum())
+    canc_lines_pd = int(df["is_cancellation"].sum())
+    ret_lines_pd = int(((df["Quantity"] < 0) & (~df["is_cancellation"])).sum())
+    qd_match = (
+        int(to_num(qd_hive.loc["positive_sale", "lines"])) == pos_lines_pd
+        and int(to_num(qd_hive.loc["cancellation", "lines"])) == canc_lines_pd
+        and int(to_num(qd_hive.loc["return_negative_quantity", "lines"])) == ret_lines_pd
+    )
+    check("quantity_direction_lines_all_match", True, qd_match, qd_match)
 
     # ------------------------------------------------------------------
     # 8. Missing customer identifiers

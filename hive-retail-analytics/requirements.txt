@@ -13,3 +13,5 @@ pyarrow>=14
 streamlit>=1.28
 plotly>=5.15
 numpy>=1.24
+fastapi>=0.110.0
+uvicorn>=0.28.0

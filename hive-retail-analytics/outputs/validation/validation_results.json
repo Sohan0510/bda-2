@@ -1,5 +1,5 @@
 {
-  "validated_at": "2026-10-19T04:45:14.018251",
+  "validated_at": "2026-10-19T05:16:59.934845",
   "processed_csv": "F:\\bda-2\\hive-retail-analytics\\data\\processed\\online_retail_clean.csv",
   "raw_records": 541909,
   "overall_pass": true,
@@ -139,6 +139,54 @@
       "match": true
     },
     {
+      "check": "top20_products_by_revenue_ranking",
+      "hive_value": [
+        "DOT",
+        "22423",
+        "47566",
+        "85123A",
+        "85099B",
+        "23084",
+        "POST",
+        "22086",
+        "84879",
+        "79321",
+        "22502",
+        "22197",
+        "23298",
+        "22386",
+        "23203",
+        "21137",
+        "22720",
+        "23284",
+        "22960",
+        "82484"
+      ],
+      "pandas_value": [
+        "DOT",
+        "22423",
+        "47566",
+        "85123A",
+        "85099B",
+        "23084",
+        "POST",
+        "22086",
+        "84879",
+        "79321",
+        "22502",
+        "22197",
+        "23298",
+        "22386",
+        "23203",
+        "21137",
+        "22720",
+        "23284",
+        "22960",
+        "82484"
+      ],
+      "match": true
+    },
+    {
       "check": "country_revenue_all_countries",
       "hive_value": [
         8187806.36,
@@ -250,6 +298,24 @@
       "check": "return_lines",
       "hive_value": 10624,
       "pandas_value": 10624,
+      "match": true
+    },
+    {
+      "check": "cancellation_invoices_by_country_all_match",
+      "hive_value": true,
+      "pandas_value": true,
+      "match": true
+    },
+    {
+      "check": "cancellation_lines_by_country_all_match",
+      "hive_value": true,
+      "pandas_value": true,
+      "match": true
+    },
+    {
+      "check": "quantity_direction_lines_all_match",
+      "hive_value": true,
+      "pandas_value": true,
       "match": true
     },
     {

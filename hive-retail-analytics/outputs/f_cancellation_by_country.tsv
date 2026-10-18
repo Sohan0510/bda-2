@@ -1,39 +1,39 @@
-﻿country	cancellation_invoices	cancellation_lines	cancellation_value_gbp
-United Kingdom	23494	7856	-815291.60
-Germany	603	453	-7168.93
-EIRE	360	302	-20177.14
-France	461	149	-12311.21
-USA	7	112	-1849.47
-Australia	69	74	-1444.04
-Spain	105	48	-6802.53
-Italy	55	45	-592.73
-Belgium	119	38	-285.38
-Japan	28	37	-2075.75
-Switzerland	74	35	-704.55
-Portugal	71	18	-4380.08
-Malta	10	15	-220.12
-Norway	40	14	-1001.98
-Sweden	46	11	-1782.42
-Poland	24	11	-121.51
-Channel Islands	33	10	-364.15
-Finland	48	10	-219.34
-Denmark	21	9	-187.20
-Cyprus	20	8	-644.09
-Netherlands	101	8	-784.80
-Singapore	10	7	-12158.90
-Czech Republic	5	5	-119.02
-Hong Kong	15	4	-5574.76
-Austria	19	3	-44.36
-Israel	9	2	-227.44
-Greece	6	1	-50.00
-European Community	5	1	-8.50
-Bahrain	4	1	-205.74
-Saudi Arabia	2	1	-14.75
-Lithuania	4	0	0.00
-Lebanon	1	0	0.00
-Brazil	1	0	0.00
-Iceland	7	0	0.00
-RSA	1	0	0.00
-Canada	6	0	0.00
-United Arab Emirates	3	0	0.00
-Unspecified	13	0	0.00
+country	cancellation_invoices	cancellation_lines	cancellation_value_gbp
+United Kingdom	3372	7856	-815291.60
+Germany	146	453	-7168.93
+EIRE	72	302	-20177.14
+France	69	149	-12311.21
+USA	2	112	-1849.47
+Australia	12	74	-1444.04
+Spain	15	48	-6802.53
+Italy	17	45	-592.73
+Belgium	21	38	-285.38
+Japan	9	37	-2075.75
+Switzerland	20	35	-704.55
+Portugal	13	18	-4380.08
+Malta	5	15	-220.12
+Norway	4	14	-1001.98
+Poland	5	11	-121.51
+Sweden	10	11	-1782.42
+Channel Islands	7	10	-364.15
+Finland	7	10	-219.34
+Denmark	3	9	-187.20
+Cyprus	4	8	-644.09
+Netherlands	6	8	-784.80
+Singapore	3	7	-12158.90
+Czech Republic	3	5	-119.02
+Hong Kong	4	4	-5574.76
+Austria	2	3	-44.36
+Israel	1	2	-227.44
+Bahrain	1	1	-205.74
+European Community	1	1	-8.50
+Greece	1	1	-50.00
+Saudi Arabia	1	1	-14.75
+Brazil	0	0	0.00
+Canada	0	0	0.00
+Iceland	0	0	0.00
+Lebanon	0	0	0.00
+Lithuania	0	0	0.00
+RSA	0	0	0.00
+United Arab Emirates	0	0	0.00
+Unspecified	0	0	0.00

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Large-Scale Customer Transaction and Purchase Pattern Analysis Using Apache Hive</title>
+  <meta name="description" content="Big Data Analytics enterprise dashboard powered by Apache Hive 4.0.0 analyzing genuine retail transaction data from the UCI Online Retail repository.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Chart.js for High Performance Canvas Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-section">
+        <div class="brand-logo" id="brand-logo-icon">🐝</div>
+        <div class="brand-info">
+          <h1>Apache Hive Retail Analytics</h1>
+          <p>Big Data Analytics Data Warehouse (BCS714D Mini-Project)</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="status-pill" id="system-status-indicator">
+          <span class="status-dot"></span>
+          <span>HIVE 4.0.0 CONNECTED</span>
+        </div>
+        <a href="/docs" target="_blank" class="btn-header" id="btn-api-docs">
+          <span>⚡ API Docs (Swagger)</span>
+        </a>
+        <a href="http://localhost:8501" target="_blank" class="btn-header" id="btn-streamlit-dash">
+          <span>📊 Streamlit View</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Showcase Banner -->
+  <section class="hero-banner" id="hero-banner-section">
+    <div class="hero-card">
+      <div class="hero-text">
+        <h2>Large-Scale Customer Transaction and Purchase Pattern Analysis</h2>
+        <p>
+          End-to-end Big Data Analytics workflow analyzing <b>541,909 genuine retail transaction lines</b> from the 
+          <b>UCI Online Retail Dataset</b>. Computes monthly sales trajectories, product volume demand, gross revenue realization, 
+          geographic market footprints, and returns accounting through executable <b>HiveQL queries</b>.
+        </p>
+      </div>
+      <div class="tech-badges">
+        <span class="tech-badge">APACHE HIVE 4.0.0</span>
+        <span class="tech-badge">ORC COLUMNAR FORMAT</span>
+        <span class="tech-badge">DECIMAL(18,2) FINANCIALS</span>
+        <span class="tech-badge">FASTAPI ASYNC BACKEND</span>
+        <span class="tech-badge">24/24 VALIDATED</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Tabs Bar -->
+  <nav class="nav-tabs-wrapper" id="navigation-tabs-container">
+    <div class="nav-tabs" role="tablist">
+      <button class="nav-tab-btn active" data-tab="tab-overview" id="nav-btn-overview" role="tab">
+        <span>📊</span> Sales Overview
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-monthly" id="nav-btn-monthly" role="tab">
+        <span>📈</span> Monthly Sales
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-top-qty" id="nav-btn-top-qty" role="tab">
+        <span>📦</span> Top Products (Quantity)
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-prod-rev" id="nav-btn-prod-rev" role="tab">
+        <span>💰</span> Product Revenue
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-countries" id="nav-btn-countries" role="tab">
+        <span>🌍</span> Country Analysis
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-returns" id="nav-btn-returns" role="tab">
+        <span>🔄</span> Transaction & Returns
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-quality" id="nav-btn-quality" role="tab">
+        <span>🛡️</span> Data Quality & Audit
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-hiveql" id="nav-btn-hiveql" role="tab">
+        <span>💻</span> HiveQL Studio & Schema
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Tabs -->
+  <main class="main-content" id="main-content-area">
+
+    <!-- ====================================================================
+         TAB 1: SALES OVERVIEW
+         ==================================================================== -->
+    <section class="tab-pane active" id="tab-overview" role="tabpanel">
+      <div class="info-callout">
+        <span>💡</span>
+        <div>
+          <strong>Big Data Processing Architecture:</strong> Genuine UCI Dataset (541,909 records) ➔ Data Preprocessing &amp; Transparent Flags ➔ Apache Hive 4.0.0 ORC Analytical Tables ➔ HiveQL Analytical Aggregations ➔ Independent Mathematical Verification.
+        </div>
+      </div>
+
+      <!-- KPI Grid -->
+      <div class="kpi-grid" id="overview-kpi-grid">
+        <div class="kpi-card" id="kpi-records-card">
+          <div class="kpi-label">Transaction Records</div>
+          <div class="kpi-value" id="kpi-total-records">541,909</div>
+          <div class="kpi-meta">100% genuine UCI lines</div>
+        </div>
+        <div class="kpi-card" id="kpi-invoices-card">
+          <div class="kpi-label">Distinct Invoices</div>
+          <div class="kpi-value" id="kpi-distinct-invoices">25,900</div>
+          <div class="kpi-meta">Individual sales orders</div>
+        </div>
+        <div class="kpi-card" id="kpi-products-card">
+          <div class="kpi-label">Distinct Products</div>
+          <div class="kpi-value" id="kpi-distinct-products">4,070</div>
+          <div class="kpi-meta">Unique StockCodes</div>
+        </div>
+        <div class="kpi-card" id="kpi-customers-card">
+          <div class="kpi-label">Identified Customers</div>
+          <div class="kpi-value" id="kpi-identified-customers">4,372</div>
+          <div class="kpi-meta">Verified CustomerIDs</div>
+        </div>
+        <div class="kpi-card" id="kpi-countries-card">
+          <div class="kpi-label">Global Markets</div>
+          <div class="kpi-value" id="kpi-distinct-countries">38</div>
+          <div class="kpi-meta">Active destination nations</div>
+        </div>
+        <div class="kpi-card" id="kpi-quantity-card">
+          <div class="kpi-label">Total Quantity Recorded</div>
+          <div class="kpi-value" id="kpi-total-quantity">5,176,450</div>
+          <div class="kpi-meta">Net units purchased</div>
+        </div>
+      </div>
+
+      <!-- Financial Totals Grid -->
+      <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: #fff;">
+        Financial Integrity Breakdown (DECIMAL Precision)
+      </h3>
+      <div class="financial-grid" id="financial-summary-grid">
+        <div class="financial-card positive">
+          <div class="financial-title">Gross Positive Sales Revenue</div>
+          <div class="financial-amount" id="fin-positive-sales">£10,644,560.42</div>
+          <div class="financial-desc">Orders with Quantity &gt; 0 and no cancellation signal.</div>
+        </div>
+        <div class="financial-card adjustment">
+          <div class="financial-title">Cancellation &amp; Return Adjustment</div>
+          <div class="financial-amount" id="fin-cancellation-adj">-£896,812.49</div>
+          <div class="financial-desc">Explicitly deducted; never hidden or distorted.</div>
+        </div>
+        <div class="financial-card net">
+          <div class="financial-title">Net Signed Revenue Realized</div>
+          <div class="financial-amount" id="fin-net-signed">£9,747,747.93</div>
+          <div class="financial-desc">True financial turnover computed over all lines.</div>
+        </div>
+      </div>
+
+      <!-- Charts Row 1 -->
+      <div class="charts-grid-7-5">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Monthly Revenue Trajectory (Gross vs Net Signed)</div>
+              <div class="chart-subtitle">Hive query b_monthly_sales.hql aggregating across 13 months</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-overview-monthly"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Transaction Classification Breakdown</div>
+              <div class="chart-subtitle">Hive query f_quantity_direction.hql</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-overview-breakdown"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 2: MONTHLY SALES ANALYSIS
+         ==================================================================== -->
+    <section class="tab-pane" id="tab-monthly" role="tabpanel">
+      <div class="info-callout">
+        <span>📈</span>
+        <div>
+          <strong>Monthly Sales Analysis:</strong> Aggregates transactions by <code>invoice_month</code>.
+          Reveals distinct seasonal patterns, including the massive Q4 holiday purchasing acceleration in November 2011 (£1.51M gross sales).
+        </div>
+      </div>
+
+      <div class="charts-grid-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Monthly Revenue Momentum (£ GBP)</div>
+              <div class="chart-subtitle">Comparison of Positive Sales vs. Signed Net Revenue</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-monthly-revenue"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Monthly Unit Volumes &amp; Order Invoices</div>
+              <div class="chart-subtitle">Quantity sold (bars) vs. Distinct Invoices (line)</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-monthly-volume"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="chart-title">Detailed Monthly Financial Matrix (Apache Hive Output)</div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="table-monthly-sales">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Gross Revenue (GBP)</th>
+                <th>Net Signed Revenue (GBP)</th>
+                <th>Adjustment (GBP)</th>
+                <th>Positive Units</th>
+                <th>Distinct Invoices</th>
+                <th>Avg Line Value</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-monthly-sales">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 3: TOP PRODUCTS (QUANTITY)
+         ==================================================================== -->
+    <section class="tab-pane" id="tab-top-qty" role="tabpanel">
+      <div class="info-callout">
+        <span>📦</span>
+        <div>
+          <strong>Top-Selling Products (Quantity):</strong> Ranked strictly by <code>StockCode</code> to prevent fragmenting products across variant descriptions. 
+          Identifies the highest physical demand products moving through the supply chain.
+        </div>
+      </div>
+
+      <div class="charts-grid-7-5">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Top 20 Products by Units Sold (High-Demand Champions)</div>
+              <div class="chart-subtitle">Hive query c_product_top20_quantity.hql</div>
+            </div>
+          </div>
+          <div class="chart-body" style="min-height: 460px;">
+            <canvas id="chart-top-quantity"></canvas>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="kpi-card" style="border-left: 4px solid #8b5cf6;">
+            <div class="kpi-label">#1 Physical Volume Champion</div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #fff;" id="top-qty-1-name">
+              SMALL POPCORN HOLDER
+            </div>
+            <div style="font-size: 0.82rem; color: #a78bfa; font-family: var(--font-mono); margin: 4px 0 12px;">
+              StockCode: 22197
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+              <span>Units: <b id="top-qty-1-units">56,450</b></span>
+              <span>Revenue: <b id="top-qty-1-rev">£34,093.65</b></span>
+            </div>
+          </div>
+
+          <div class="kpi-card" style="border-left: 4px solid #06b6d4;">
+            <div class="kpi-label">#2 Physical Volume Runner-Up</div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #fff;" id="top-qty-2-name">
+              WORLD WAR 2 GLIDERS ASSTD DESIGNS
+            </div>
+            <div style="font-size: 0.82rem; color: #67e8f9; font-family: var(--font-mono); margin: 4px 0 12px;">
+              StockCode: 84077
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+              <span>Units: <b id="top-qty-2-units">53,847</b></span>
+              <span>Revenue: <b id="top-qty-2-rev">£13,541.28</b></span>
+            </div>
+          </div>
+
+          <div class="kpi-card" style="border-left: 4px solid #10b981;">
+            <div class="kpi-label">#3 Physical Volume Third</div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #fff;" id="top-qty-3-name">
+              JUMBO BAG RED RETROSPOT
+            </div>
+            <div style="font-size: 0.82rem; color: #34d399; font-family: var(--font-mono); margin: 4px 0 12px;">
+              StockCode: 85099B
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+              <span>Units: <b id="top-qty-3-units">47,363</b></span>
+              <span>Revenue: <b id="top-qty-3-rev">£92,356.03</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Searchable Product Catalog -->
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div>
+            <div class="chart-title">Complete Warehouse Catalog Explorer (4,070 Distinct Products)</div>
+            <div class="chart-subtitle">Direct live search across Hive analytical output (c_product_quantity_all)</div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="input-catalog-search" class="search-input" placeholder="Search product or StockCode...">
+            <select id="select-catalog-sort" class="select-input">
+              <option value="quantity">Sort by Quantity</option>
+              <option value="revenue">Sort by Revenue</option>
+              <option value="invoices">Sort by Invoices</option>
+              <option value="description">Sort by Name</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="table-catalog">
+            <thead>
+              <tr>
+                <th>StockCode</th>
+                <th>Description</th>
+                <th>Units Recorded</th>
+                <th>Sales Value (GBP)</th>
+                <th>Distinct Invoices</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-catalog">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-controls">
+          <div id="catalog-page-info">Showing page 1 of 163</div>
+          <div class="pagination-btns">
+            <button class="btn-page" id="btn-catalog-prev" disabled>&larr; Previous</button>
+            <button class="btn-page" id="btn-catalog-next">Next &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 4: PRODUCT REVENUE ANALYSIS
+         ==================================================================== -->
+    <section class="tab-pane" id="tab-prod-rev" role="tabpanel">
+      <div class="info-callout">
+        <span>💰</span>
+        <div>
+          <strong>Product Revenue Analysis:</strong> Demonstrates that <b>highest unit volume does NOT necessarily mean highest revenue</b>. 
+          Items with high unit values generate substantially greater revenue realization despite fewer units sold.
+        </div>
+      </div>
+
+      <div class="charts-grid-7-5">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Top 20 Products by Monetary Revenue (£ GBP)</div>
+              <div class="chart-subtitle">Hive query c_product_top20_revenue.hql</div>
+            </div>
+          </div>
+          <div class="chart-body" style="min-height: 460px;">
+            <canvas id="chart-top-revenue"></canvas>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Discrepancy Demonstration Card -->
+          <div class="kpi-card" style="border: 1px solid rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05);">
+            <div class="kpi-label" style="color: #fbbf24;">⚡ Key Analytical Finding</div>
+            <div style="font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 8px;">
+              Volume vs. Revenue Divergence
+            </div>
+            <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+              • <code>SMALL POPCORN HOLDER</code> moved <b>56,450 units</b> but generated <b>£34,093.65</b>.<br>
+              • <code>DOTCOM POSTAGE</code> moved only <b>707 units</b> but generated <b>£206,245.48</b>.<br>
+              • Physical leader <code>REGENCY CAKESTAND 3 TIER</code> realized <b>£164,762.19</b> across 12,414 units.
+            </p>
+          </div>
+
+          <!-- Category Pie Card -->
+          <div class="chart-card" style="flex: 1;">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-title">Derived Category Distribution</div>
+                <div class="chart-subtitle">From config/category_rules.csv mapping</div>
+              </div>
+            </div>
+            <div class="chart-body" style="min-height: 240px;">
+              <canvas id="chart-category-split"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Low-volume tail collapse -->
+      <div class="table-card">
+        <div class="chart-title" style="margin-bottom: 8px;">Catalog Tail Analysis: Low-Volume Products (&le; 5 Transactions)</div>
+        <div class="chart-subtitle" style="margin-bottom: 14px;">Hive query c_product_low_volume.hql identifying dormant inventory.</div>
+        <div class="table-responsive">
+          <table class="data-table" id="table-low-volume">
+            <thead>
+              <tr>
+                <th>StockCode</th>
+                <th>Description</th>
+                <th>Units</th>
+                <th>Total Value (GBP)</th>
+                <th>Transaction Lines</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-low-volume">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 5: COUNTRY ANALYSIS
+         ==================================================================== -->
+    <section class="tab-pane" id="tab-countries" role="tabpanel">
+      <div class="info-callout">
+        <span>🌍</span>
+        <div>
+          <strong>Geographic Footprint:</strong> Evaluates customer sales and order volumes across 38 destination countries. 
+          Analyzes UK domestic concentration against international export markets.
+        </div>
+      </div>
+
+      <div class="financial-grid">
+        <div class="financial-card positive">
+          <div class="financial-title">Domestic UK Revenue Realization</div>
+          <div class="financial-amount" id="country-uk-rev">£8,187,806.36</div>
+          <div class="financial-desc" id="country-uk-pct">84.0% of total worldwide turnover.</div>
+        </div>
+        <div class="financial-card net">
+          <div class="financial-title">Top International Export Market</div>
+          <div class="financial-amount" id="country-top-intl-name">Netherlands</div>
+          <div class="financial-desc" id="country-top-intl-rev">£284,655.32 realized across 200,128 units.</div>
+        </div>
+        <div class="financial-card adjustment" style="border-top-color: #38bdf8;">
+          <div class="financial-title">Active Global Nations</div>
+          <div class="financial-amount" id="country-total-nations">38 Nations</div>
+          <div class="financial-desc">Full international customer distribution footprint.</div>
+        </div>
+      </div>
+
+      <div class="charts-grid-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Top 15 Export Markets by Sales Revenue (£ GBP)</div>
+              <div class="chart-subtitle">Hive query e_country_summary.hql (excluding UK)</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-country-sales"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Country-Wise Monthly Sales Trajectory</div>
+              <div class="chart-subtitle">Hive query e_country_monthly.hql</div>
+            </div>
+            <select id="select-country-trend" class="select-input">
+              <option value="Germany">Germany</option>
+              <option value="France">France</option>
+              <option value="EIRE">EIRE</option>
+              <option value="Netherlands">Netherlands</option>
+              <option value="Australia">Australia</option>
+              <option value="Spain">Spain</option>
+            </select>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-country-monthly"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="chart-title">Complete Country Sales Matrix (All 38 Nations)</div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="table-country-summary">
+            <thead>
+              <tr>
+                <th>Country</th>
+                <th>Revenue (GBP)</th>
+                <th>Quantity Sold</th>
+                <th>Distinct Invoices</th>
+                <th>Identified Customers</th>
+                <th>Transaction Lines</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-country-summary">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 6: TRANSACTION & RETURNS
+         ==================================================================== -->
+    <section class="tab-pane" id="tab-returns" role="tabpanel">
+      <div class="info-callout">
+        <span>🔄</span>
+        <div>
+          <strong>Transaction Quality &amp; Cancellations:</strong> Explores cancelled orders (prefix 'C'), return lines (Quantity &lt; 0), 
+          hourly shopping distribution, and customer purchase cadence.
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Distinct Cancelled Invoices</div>
+          <div class="kpi-value" id="kpi-canc-invoices">3,836</div>
+          <div class="kpi-meta" id="kpi-canc-inv-rate">14.81% of total orders</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Total Cancellation Lines</div>
+          <div class="kpi-value" id="kpi-canc-lines">9,288</div>
+          <div class="kpi-meta" id="kpi-canc-line-rate">1.71% of total transaction rows</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Return Lines (Negative Qty)</div>
+          <div class="kpi-value">1,336</div>
+          <div class="kpi-meta">Uncancelled items returned</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Monetary Return Loss</div>
+          <div class="kpi-value" style="color: #f43f5e;">-£896,812.49</div>
+          <div class="kpi-meta">Gross refund adjustment</div>
+        </div>
+      </div>
+
+      <div class="charts-grid-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Hourly Purchasing Activity Patterns (24h)</div>
+              <div class="chart-subtitle">Hive query g_hourly_pattern.hql showing peak shopping between 10:00 - 15:00</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-hourly-pattern"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Weekday vs. Weekend Sales Split</div>
+              <div class="chart-subtitle">Hive query g_weekday_weekend.hql</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-weekday-weekend"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancellations by Country Table -->
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div>
+            <div class="chart-title">Cancellations by Country (Verified Hive Output)</div>
+            <div class="chart-subtitle">Hive query f_cancellation_by_country.hql</div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="table-canc-country">
+            <thead>
+              <tr>
+                <th>Country</th>
+                <th>Cancelled Invoices (Distinct)</th>
+                <th>Cancellation Lines</th>
+                <th>Financial Deduction (GBP)</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-canc-country">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 7: DATA QUALITY & AUDIT
+         ==================================================================== -->
+    <section class="tab-pane" id="tab-quality" role="tabpanel">
+      <div class="info-callout">
+        <span>🛡️</span>
+        <div>
+          <strong>Data Cleaning &amp; Independent Verification:</strong> Big Data outputs are rigorously cross-validated against 
+          underlying dataset calculations. All 541,909 records are accounted for without silent omission.
+        </div>
+      </div>
+
+      <div class="charts-grid-2">
+        <div class="kpi-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="kpi-label">Data Preprocessing &amp; Flagging Audit</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 12px;">Data Cleaning Integrity</h3>
+            <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.8;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding: 6px 0;">
+                <span>Total Raw Workbook Rows:</span> <b>541,909</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding: 6px 0;">
+                <span>Retained in Cleaned Staging:</span> <b style="color: #34d399;">541,909 (100% Retained)</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding: 6px 0;">
+                <span>Missing CustomerID (Guest Checkouts):</span> <b style="color: #fbbf24;">135,080 (24.93%)</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding: 6px 0;">
+                <span>Missing Descriptions:</span> <b style="color: #fbbf24;">1,454 (0.27%)</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding: 6px 0;">
+                <span>Identical Duplicate Records:</span> <b>5,268 (Flagged via is_duplicate)</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 6px 0;">
+                <span>Corrupt / Unparseable Dates:</span> <b style="color: #34d399;">0 (Zero Errors)</b>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 14px; font-size: 0.78rem; color: var(--text-muted);">
+            Strategy: Records with missing customer IDs are kept for sales aggregates, but strictly excluded from customer count metrics.
+          </div>
+        </div>
+
+        <div class="kpi-card" style="border-color: rgba(16, 185, 129, 0.4);">
+          <div class="kpi-label">Independent Mathematical Verification Status</div>
+          <div style="display: flex; align-items: baseline; gap: 10px; margin: 8px 0 14px;">
+            <span style="font-size: 2.8rem; font-weight: 800; font-family: var(--font-mono); color: #34d399;" id="val-pass-count">24 / 24</span>
+            <span class="badge-pass">ALL TESTS PASSED</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+            Every single HiveQL aggregation in <code>outputs/*.tsv</code> is recomputed independently in Python directly from 
+            <code>data/processed/online_retail_clean.csv</code> using strict monetary precision tolerances.
+          </p>
+          <button class="btn-header" id="btn-run-validation" style="background: var(--accent-indigo); color: #fff; width: fit-content; padding: 10px 18px;">
+            <span>🔄 Re-Execute Verification Suite</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="chart-title" style="margin-bottom: 12px;">Live Verification Assertions Checklist (Hive vs. Pandas)</div>
+        <div class="table-responsive">
+          <table class="data-table" id="table-validation-checks">
+            <thead>
+              <tr>
+                <th>Test Assertion Name</th>
+                <th>Hive Query Match</th>
+                <th>Result Status</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-validation-checks">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 8: HIVEQL STUDIO & SCHEMA
+         ==================================================================== -->
+    <section class="tab-pane" id="tab-hiveql" role="tabpanel">
+      <div class="info-callout">
+        <span>💻</span>
+        <div>
+          <strong>Apache HiveQL Studio:</strong> Inspect the primary analytical queries powering the data warehouse. 
+          Contains 23 executable HiveQL scripts operating on Apache ORC tables.
+        </div>
+      </div>
+
+      <div class="charts-grid-7-5">
+        <div class="table-card">
+          <div class="chart-title" style="margin-bottom: 8px;">HiveQL Scripts Catalog</div>
+          <div class="table-responsive" style="max-height: 480px;">
+            <table class="data-table" id="table-hive-scripts">
+              <thead>
+                <tr>
+                  <th>Script Name</th>
+                  <th>Lines</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-hive-scripts">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-title" id="selected-script-name">Script Code Viewer</div>
+            </div>
+            <pre class="code-preview" id="code-script-viewer">-- Select a HiveQL script from the left list to view source code...</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- App Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div>
+        <b>Large-Scale Customer Transaction and Purchase Pattern Analysis Using Apache Hive</b> | Big Data Analytics Mini-Project
+      </div>
+      <div class="footer-links">
+        <a href="https://archive.ics.uci.edu/dataset/352/online+retail" target="_blank">UCI Dataset Attribution</a>
+        <a href="/docs" target="_blank">FastAPI Documentation</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
