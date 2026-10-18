@@ -1,5 +1,5 @@
 {
-  "validated_at": "2026-10-19T05:16:59.934845",
+  "validated_at": "2026-10-19T05:23:42.088610",
   "processed_csv": "F:\\bda-2\\hive-retail-analytics\\data\\processed\\online_retail_clean.csv",
   "raw_records": 541909,
   "overall_pass": true,
